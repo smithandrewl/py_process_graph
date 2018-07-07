@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import os.path
 import glob
 
+# Get a list of the process identifiers of the current running processes
 pids = [int(os.path.basename(os.path.normpath(path))) for path in glob.glob('/proc/[0-9]*')]
 
 def getProcessInfo(pid):
