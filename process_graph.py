@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import os.path
 import glob
+from datetime import datetime
 
 # Get a list of the process identifiers of the current running processes
 pids = [int(os.path.basename(os.path.normpath(path))) for path in glob.glob('/proc/[0-9]*')]
@@ -64,4 +65,8 @@ nx.draw(G, with_labels=True, node_color='#5D080D', node_size=1500, edge_color='w
 # Set the background color to black and save.
 fig.set_facecolor("#000000")
 
-plt.savefig('out.png', facecolor=fig.get_facecolor())
+# generate name for output file having ISO 8601 date format
+date = datetime.now()
+file_name = 'process_graph_' + date.strftime('%Y-%m-%dT%H-%M-%S') + '.png'
+
+plt.savefig(file_name, facecolor=fig.get_facecolor())
