@@ -23,7 +23,6 @@ def parseArguments():
 
 args = parseArguments()
 
-
 # Get a list of the process identifiers of the current running processes
 pids = [int(os.path.basename(os.path.normpath(path))) for path in glob.glob('/proc/[0-9]*')]
 
@@ -88,5 +87,6 @@ fig.set_facecolor("#000000")
 # generate name for output file having ISO 8601 date format
 date = datetime.now()
 file_name = (args.output if args.output else 'process_graph') + ( '' if (args.timestamp == 'False' or args.timestamp == 'No') else '_' +date.strftime('%Y-%m-%dT%H-%M-%S') + '.png')
+
 
 plt.savefig(file_name, facecolor=fig.get_facecolor())
