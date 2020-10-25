@@ -3,6 +3,25 @@ import matplotlib.pyplot as plt
 import os.path
 import glob
 from datetime import datetime
+import argparse
+
+def parseArguments():
+    # Create argument parser
+    parser = argparse.ArgumentParser()
+
+    # Optional arguments
+    parser.add_argument("-o", "--output", help="output file name", default=None)
+    parser.add_argument("-t", "--timestamp", help="add or remove timestamp from output file name. optional argument value [True | False | No]", default=True)
+
+    # Print version
+    parser.add_argument("-V", "--version", action="version", version='%(prog)s - Version 1.0')
+
+    # Parse arguments
+    args = parser.parse_args()
+
+    return args
+
+args = parseArguments()
 
 # Get a list of the process identifiers of the current running processes
 pids = [int(os.path.basename(os.path.normpath(path))) for path in glob.glob('/proc/[0-9]*')]
@@ -67,6 +86,7 @@ fig.set_facecolor("#000000")
 
 # generate name for output file having ISO 8601 date format
 date = datetime.now()
-file_name = 'process_graph_' + date.strftime('%Y-%m-%dT%H-%M-%S') + '.png'
+file_name = (args.output if args.output else 'process_graph') + ( '' if (args.timestamp == 'False' or args.timestamp == 'No') else '_' +date.strftime('%Y-%m-%dT%H-%M-%S') + '.png')
+
 
 plt.savefig(file_name, facecolor=fig.get_facecolor())
